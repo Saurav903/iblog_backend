@@ -43,14 +43,14 @@ blogRouter.post("/post",async(req,res)=>{
 // update
 blogRouter.patch("/update/:id",async(req,res)=>{
     const id = req.params.id;
-    const payload = req.body;
-    console.log(payload);
+    const {username,images,title,content,category,date,publicurl,likedBy,author,comments} = req.body;
     // let blog_id = bloger._id;
+    // Object.assign(bloger,payload);
+    // await bloger.save();
     try {
         const bloger = await PostModel.findOne({_id:id});
-        // await PostModel.findByIdAndUpdate({_id:blog_id},{username:payload.username,images:payload.images,title:payload.title,content:payload.content,category:payload.category,date:payload.date,publicurl:publicurl,likedBy:payload.likedBy,author:payload.author,comments:payload.comments});
-        Object.assign(bloger,payload);
-        await bloger.save();
+        console.log(bloger);
+         await PostModel.findByIdAndUpdate({_id:bloger._id},{username:username,images:images,title:title,content:content,category:category,date:date,publicurl:publicurl,likedBy:likedBy,author:author,comments:comments});
         res.send("data has been updated");
     } catch (error) {
         console.log("not updated");

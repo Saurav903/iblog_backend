@@ -5,7 +5,8 @@ const cors = require("cors");
 const { connection } = require("./db");
 const { userRouter } = require("./routes/auth.route");
 const { blogRouter } = require("./routes/blog.route");
-const fileUpload = require("express-fileupload")
+const fileUpload = require("express-fileupload");
+const { authenticate } = require("./middleware/auth.middleware");
 const app = express();
 app.use(cors({
     origin:"*"
@@ -19,6 +20,7 @@ app.use(fileUpload({
     useTempFiles:true
 }))
 app.use("/user",userRouter);
+app.use(authenticate);
 app.use("/blogs",blogRouter);
 
 app.listen(process.env.port,async()=>{
